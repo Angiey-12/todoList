@@ -3,7 +3,8 @@ import { request } from "../../../assets/js/request";
 export default {
     namespaced: true,
     state: {
-        list:[]
+        list: [],
+        dateTime:''
     },
     mutations: {
         // get todo list from json
@@ -12,6 +13,22 @@ export default {
                 i.isEdit = false
             })
             state.list = list
+        },
+        INIT_DATETIME(state) {
+            const nowDate = new Date();
+            const date = {
+                year: nowDate.getFullYear(),
+                month: nowDate.getMonth() + 1,
+                date: nowDate.getDate(),
+                hours: nowDate.getHours(),
+                minutes: nowDate.getMinutes(),
+                seconds: nowDate.getSeconds(),
+            };
+            const newmonth = date.month > 10 ? date.month : "0" + date.month;
+            const newday = date.date > 10 ? date.date : "0" + date.date;
+            const newminutes = date.minutes > 10 ? date.minutes : "0" + date.minutes;
+            const newseconds = date.seconds > 10 ? date.seconds : "0" + date.seconds;
+            state.dateTime = date.year + "-" + newmonth + "-" + newday + " " + date.hours + ":" + newminutes + ":" + newseconds;
         },
         DELETE_TODOITEM(state, id) {
             const i = state.list.findIndex(item => item.id === id);
@@ -33,7 +50,8 @@ export default {
             const obj = {
                 id: state.list.length,
                 text: text,
-                isfinish: false
+                isfinish: false,
+                time: state.dateTime
             }
             state.list.push(obj) 
         },

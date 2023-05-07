@@ -1,6 +1,7 @@
 <template>
     <div>
         <el-card class="list-card-item" v-for="todoItem in list" :key="todoItem.id" shadow="hover">
+            <p class="timetext"><i class="el-icon-time"></i> Add time: {{todoItem.time}}</p>
             <el-row  type="flex" align="middle">
                     <!--pc view-->
                     <el-col class="content-box" :xl="18" :xs="22">
@@ -36,14 +37,16 @@ export default {
     created(){
         // get todo list from json
         this.setList()
+        this.dateTime()
     },
     computed:{
         ...mapState({
-            list:state=>state.todo.list
+            list:state=>state.todo.list,
         }),
     },
     methods:{
         ...mapMutations({
+            dateTime:'todo/INIT_DATETIME',
             delItem:"todo/DELETE_TODOITEM",
             editItem:"todo/UPDATE_TODOITEM",
             checkItem:"todo/CHECK_TODOITEM"
@@ -58,6 +61,7 @@ export default {
         // edit context && change to input
         editRow(item){
             this.$set(item,"isEdit",true);
+            console.log(this.dateTime)
         },
         handleBlur(item,event){
             if(!event.target.value.trim()){
@@ -83,5 +87,10 @@ export default {
 }
 .content-box{
     display: flex;
+}
+.timetext {
+    margin: 0;
+    font-size: 12px;
+    color: #909399;
 }
 </style>
