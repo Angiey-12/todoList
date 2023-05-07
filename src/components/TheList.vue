@@ -1,28 +1,30 @@
 <template>
     <div>
-        <el-card class="list-card-item" v-for="todoItem in list" :key="todoItem.id" shadow="hover">
-            <p class="timetext"><i class="el-icon-time"></i> Add time: {{todoItem.time}}</p>
-            <el-row  type="flex" align="middle">
-                    <!--pc view-->
-                    <el-col class="content-box" :xl="18" :xs="22">
-                        <input type="checkbox" :checked="todoItem.isfinish" @change="handleChange(todoItem.id)" />
-                        <span v-show="!todoItem.isEdit">{{todoItem.text}}</span>
-                        <el-input type="text" v-show="todoItem.isEdit" v-model="todoItem.text" @keyup.enter.native="handleBlur(todoItem,$event)" ref="inputTitle"/>
-                    </el-col>
-                    <el-col :span="6" class="btn-row hidden-sm-and-down">
-                        <el-button-group>
-                            <el-button type="primary" icon="el-icon-edit" @click="editRow(todoItem)"></el-button>
-                            <el-button type="primary" icon="el-icon-delete" @click="deleteRow(todoItem.id)"></el-button>
-                    </el-button-group>
-                    </el-col>
-                    <!--mobile view-->
-                    <el-col :xs="2" class="btn-row hidden-sm-and-up">
-                        <el-button-group>
-                            <el-button size="mini" type="text" icon="el-icon-delete" @click="deleteRow(todoItem.id)"></el-button>
+        <transition-group name="slide">
+            <el-card class="list-card-item" v-for="todoItem in list" :key="todoItem.id" shadow="hover">
+                <p class="timetext"><i class="el-icon-time"></i> Add time: {{todoItem.time}}</p>
+                <el-row type="flex" align="middle">
+                        <!--pc view-->
+                        <el-col class="content-box" :xl="18" :xs="22">
+                            <input type="checkbox" :checked="todoItem.isfinish" @change="handleChange(todoItem.id)" />
+                            <span v-show="!todoItem.isEdit">{{todoItem.text}}</span>
+                            <el-input type="text" v-show="todoItem.isEdit" v-model="todoItem.text" @keyup.enter.native="handleBlur(todoItem,$event)" ref="inputTitle"/>
+                        </el-col>
+                        <el-col :span="6" class="btn-row hidden-sm-and-down">
+                            <el-button-group>
+                                <el-button type="primary" icon="el-icon-edit" @click="editRow(todoItem)"></el-button>
+                                <el-button type="primary" icon="el-icon-delete" @click="deleteRow(todoItem.id)"></el-button>
                         </el-button-group>
-                    </el-col>
-                </el-row>
-        </el-card>
+                        </el-col>
+                        <!--mobile view-->
+                        <el-col :xs="2" class="btn-row hidden-sm-and-up">
+                            <el-button-group>
+                                <el-button size="mini" type="text" icon="el-icon-delete" @click="deleteRow(todoItem.id)"></el-button>
+                            </el-button-group>
+                        </el-col>
+                    </el-row>
+            </el-card>
+        </transition-group>
     </div>
 </template>
 <script>
@@ -92,5 +94,33 @@ export default {
     margin: 0;
     font-size: 12px;
     color: #909399;
+}
+.slide-enter-active {
+    animation: slide-in 2s ease-out;
+}
+.slide-leave-active {
+    display: none;
+    animation: slide-out 0.5s ease;
+    position: absolute;
+}
+.slide-move {
+    transition: all 2s;
+}
+
+@keyframes slide-in {
+from {
+    transform: translateY(50px)
+}
+to {
+    transform: translateY(0)
+}
+}
+@keyframes slide-out {
+from {
+    transform: translateY(0)
+}
+to {
+    transform: translateY(50px)
+}
 }
 </style>
