@@ -58,6 +58,7 @@ export default {
     created(){
         // get todo list from json
         this.setList()
+        this.dateTime()
     },
     computed:{
         // ...mapState({
