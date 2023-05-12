@@ -5,6 +5,7 @@
     <div class="list-container">
       <div>
         <the-header></the-header>
+        <the-filter></the-filter>
         <the-list></the-list>
       </div>
     </div>
@@ -15,12 +16,13 @@
 // import HelloWorld from './components/HelloWorld.vue'
 import TheHeader from './components/TheHeader.vue'
 import TheList from './components/TheList.vue'
-
+import TheFilter from './components/TheFilter.vue'
 export default {
   name: 'App',
   components: {
     TheHeader,
-    TheList
+    TheList,
+    TheFilter
     // HelloWorld
   }
 }
@@ -34,5 +36,8 @@ export default {
   /* text-align: center; */
   color: #2c3e50;
   /*margin-top: 60px;*/
+}
+.list-container {
+  margin: 10px 
 }
 </style>

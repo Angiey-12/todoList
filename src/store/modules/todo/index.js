@@ -4,7 +4,22 @@ export default {
     namespaced: true,
     state: {
         list: [],
-        dateTime:''
+        dateTime: '',
+        status: 'all'
+    },
+    getters: {
+        getSatusList(state) {
+            switch (state.status) {
+                case 'all':
+                    return state.list
+                case 'unfinish':
+                    return state.list.filter(item => !item.isfinish) 
+                case 'finish':
+                    return state.list.filter(item => item.isfinish) 
+                default:
+                    break;
+                }
+            }
     },
     mutations: {
         // get todo list from json
@@ -54,6 +69,9 @@ export default {
                 time: state.dateTime
             }
             state.list.push(obj) 
+        },
+        SET_ITEMSTATUS(state, status) {
+            state.status = status
         },
     },
     actions:{
